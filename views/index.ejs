@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Weather</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/autocomplete.css">
+	<link rel="shortcut icon" type="image/png" href="sun.png" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="container">
+		<div 
+			class="weather text-center"
+			style="height: 100px;"
+		>
+			<% if(weather !== null){ %>
+				<p><%= weather %></p>
+			<% }else{ %>
+				<p>&nbsp;<br></p>
+			<% } %>
+		</div>
+		<fieldset>
+			<form 
+				autocomplete="off" 
+				action="/byId" 
+				name="city"
+				method="POST" 
+			>
+				<div class="autocomplete py" style="width:300px;">
+					<input 
+						id="city" 
+						type="text" 
+						name="myCountry" 
+						placeholder="Saznaj vreme"
+					>
+					<input type="text" name="city_id" hidden>
+					<div 
+						id="search-container"
+						style="position: absolute;width:100%;"
+						class="autocomplete-items" 
+					>
+
+					</div>
+				</div>
+
+				<input type="submit" name="submit" value="Potvrdi">
+			</form>
+	</fieldset>
+	</div>
+
+	<div class="left col-md-4">
+		<ul 
+			style="list-style: none;" 
+			class="list-group">
+			<% if(history !== null){ %>
+				<h5> Pretrazivano ranije: </h5>
+				<% history.forEach(el => { %>
+				<li 
+					style="height: 50px;"
+					class="list-group-item list-group-item-action"
+				>
+					<div
+						style="position: absolute;left: 10px;"
+						data-id="<%=el.id%>"
+						onclick="checkWeather(this)"
+					>
+						<%= el.name %>
+					</div>
+					<span 
+						data-id="<%=el.id%>"
+						style="position: absolute;right: 10px;z-index: 1000;"
+						onclick="deleteRecord(this)" 
+					>
+						<img
+							style="width: 15px;right: 10px;" 
+							src="/images/x.png"
+						>
+					</span>
+				</li>
+				<% }) %>
+
+			<% } %>
+		</ul>
+	</div>
+
+	<% if(error !== null){ %>
+	<p><%= error %></p>
+	<% } %>
+
+
+
+<script src="/jquery3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/index.js"></script>
+</body>
+</html>
